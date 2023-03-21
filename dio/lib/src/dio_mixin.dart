@@ -387,16 +387,6 @@ abstract class DioMixin implements Dio {
   Future<Response<T>> fetch<T>(RequestOptions requestOptions) async {
     requestOptions.cancelToken?.requestOptions = requestOptions;
 
-    if (T != dynamic &&
-        !(requestOptions.responseType == ResponseType.bytes ||
-            requestOptions.responseType == ResponseType.stream)) {
-      if (T == String) {
-        requestOptions.responseType = ResponseType.plain;
-      } else {
-        requestOptions.responseType = ResponseType.json;
-      }
-    }
-
     // Convert the request interceptor to a functional callback in which
     // we can handle the return value of interceptor callback.
     FutureOr Function(dynamic) requestInterceptorWrapper(
